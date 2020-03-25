@@ -16,7 +16,7 @@ public class ObjectPlacement : MonoBehaviour
 
     public float Speed = 1;
 
-    public Text debug;
+    public Text debug = null;
 
     public GameObject placedObject; // prefab
     private GameObject spawnedObject;
@@ -61,31 +61,39 @@ public class ObjectPlacement : MonoBehaviour
         return RectTransformUtility.RectangleContainsScreenPoint(direction, position, null);
     }
 
+    double get_trigonometric_angle(double degrees)
+    {
+        return (Math.PI * (degrees * 100)) / 180;
+    }
+
     void HandleInput(Vector2 position)
     {
         Vector2 directionOrientation = default;
 
-        directionOrientation.x = (direction.position.x - position.x) / (direction.sizeDelta.x / 2);
-        directionOrientation.y = (direction.position.y - position.y) / (direction.sizeDelta.y / 2);
-
-        //debug.text = "";
-        //debug.text += directionOrientation;
-
-        Vector3 movement = new Vector3(directionOrientation.x, 0.0f, directionOrientation.y);
         if (spawnedObject != null)
+        {
+
+            directionOrientation.x = -((direction.position.x - position.x) / (direction.sizeDelta.x / 2));
+            directionOrientation.y = -((direction.position.y - position.y) / (direction.sizeDelta.y / 2));
+
+            if (debug != null)
+            {
+                debug.text = "";
+                debug.text += directionOrientation;
+            }
+
+            Vector3 forwardOnPlane = Vector3.ProjectOnPlane(ARCamera.transform.forward, Vector3.up).normalized;
+
+            float angle = (float)Math.Atan2(-directionOrientation.x, directionOrientation.y) * Mathf.Rad2Deg;
+
+            Vector3 movement = Quaternion.AngleAxis(-angle, Vector3.up) * forwardOnPlane;
             spawnedObjectRigidbody.AddForce(movement * Speed);
+        }
     }
 
     // Update is called once per frame
     void Update()
     {
-        //debug.text = "default";
-        debug.text = "x: ";
-        debug.text += Camera.main.transform.rotation.x.ToString();
-        debug.text += "y: ";
-        debug.text += Camera.main.transform.rotation.y.ToString();
-        debug.text += "y: ";
-        debug.text += Camera.main.transform.rotation.z.ToString();
         if (!TryGetTouchPosition(out Vector2 touchPosition))
             return;
 

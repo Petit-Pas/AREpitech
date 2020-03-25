@@ -406,7 +406,7 @@ MonoBehaviour:
     m_HorizontalOverflow: 0
     m_VerticalOverflow: 0
     m_LineSpacing: 1
-  m_Text: 'lfsdkjfh '
+  m_Text: Debug Text
 --- !u!222 &468004960
 CanvasRenderer:
   m_ObjectHideFlags: 0
@@ -795,7 +795,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   ARCamera: {fileID: 700535243}
   direction: {fileID: 312865363}
-  Speed: 2
+  Speed: 4
   debug: {fileID: 468004959}
   placedObject: {fileID: 1287371501453836824, guid: 44e89dd3d01f4604b8707f76e823ed9a,
     type: 3}
