@@ -1,0 +1,57 @@
+%YAML 1.1
+%TAG !u! tag:unity3d.com,2011:
+--- !u!114 &11400000
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 848409ee8ba454f42a5ddff137688a27, type: 3}
+  m_Name: WallImageLibrary
+  m_EditorClassIdentifier: 
+  m_GuidLow: 4865975095578952384
+  m_GuidHigh: 1407322943308727710
+  m_Images:
+  - m_SerializedGuid:
+      m_GuidLow: 5207066759103414585
+      m_GuidHigh: 8464041428100351406
+    m_SerializedTextureGuid:
+      m_GuidLow: 11863625574365036228
+      m_GuidHigh: 789253717104660667
+    m_Size: {x: 0.08, y: 0.08}
+    m_SpecifySize: 0
+    m_Name: TAG_WALL1
+    m_Texture: {fileID: 0}
+  - m_SerializedGuid:
+      m_GuidLow: 4743685947188077271
+      m_GuidHigh: 14106015088743421373
+    m_SerializedTextureGuid:
+      m_GuidLow: 11868294675413185198
+      m_GuidHigh: 12962254780975186537
+    m_Size: {x: 0.079422385, y: 0.08}
+    m_SpecifySize: 0
+    m_Name: TAG_WALL2
+    m_Texture: {fileID: 0}
+  - m_SerializedGuid:
+      m_GuidLow: 5071971154062373401
+      m_GuidHigh: 1598796118488045482
+    m_SerializedTextureGuid:
+      m_GuidLow: 2655476316475726994
+      m_GuidHigh: 6718318925081236553
+    m_Size: {x: 0.08, y: 0.08}
+    m_SpecifySize: 0
+    m_Name: TAG_WALL3
+    m_Texture: {fileID: 0}
+  - m_SerializedGuid:
+      m_GuidLow: 5694335579544338903
+      m_GuidHigh: 9789357318111163788
+    m_SerializedTextureGuid:
+      m_GuidLow: 16448492205262845441
+      m_GuidHigh: 17946899628999682936
+    m_Size: {x: 0.08, y: 0.08}
+    m_SpecifySize: 0
+    m_Name: TAG_WALL4
+    m_Texture: {fileID: 0}

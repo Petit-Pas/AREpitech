@@ -705,6 +705,8 @@ GameObject:
   - component: {fileID: 1749708694}
   - component: {fileID: 1749708695}
   - component: {fileID: 1749708696}
+  - component: {fileID: 1749708697}
+  - component: {fileID: 1749708698}
   m_Layer: 0
   m_Name: AR Session Origin
   m_TagString: Untagged
@@ -724,8 +726,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 7ab0e80cee9cc1d44928bfe488dd1e2d, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  m_PointCloudPrefab: {fileID: 1854016325464908, guid: 0d4f49e744bffd14eb527ba76c9bba12,
-    type: 3}
+  m_PointCloudPrefab: {fileID: 0}
 --- !u!114 &1749708691
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -768,7 +769,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   m_PlanePrefab: {fileID: 1568414836858200, guid: 22f6361629b313e418255c23db8488eb,
     type: 3}
-  m_DetectionMode: -1
+  m_DetectionMode: 1
 --- !u!114 &1749708694
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -796,7 +797,7 @@ MonoBehaviour:
   ARCamera: {fileID: 700535243}
   direction: {fileID: 312865363}
   Speed: 4
-  debug: {fileID: 468004959}
+  debug: {fileID: 0}
   placedObject: {fileID: 1287371501453836824, guid: 44e89dd3d01f4604b8707f76e823ed9a,
     type: 3}
 --- !u!114 &1749708696
@@ -806,16 +807,55 @@ MonoBehaviour:
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 1749708689}
-  m_Enabled: 0
+  m_Enabled: 1
   m_EditorHideFlags: 0
   m_Script: {fileID: 11500000, guid: 4dea56a9eaadd1c439095de4f9a371cb, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  m_SerializedLibrary: {fileID: 11400000, guid: 15a994584a8db3c43a0b1075700323f1,
+  m_SerializedLibrary: {fileID: 11400000, guid: 29301cebf380e4c62b381f327e64bc43,
     type: 2}
-  m_MaxNumberOfMovingImages: 1
-  m_TrackedImagePrefab: {fileID: 5198905479339007685, guid: 284308eae2677604d993d896ad5df840,
-    type: 3}
+  m_MaxNumberOfMovingImages: 10
+  m_TrackedImagePrefab: {fileID: 0}
+--- !u!114 &1749708697
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1749708689}
+  m_Enabled: 0
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: ec6c695c126d24ea3b24ed2c42a88b48, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  ObjectsToPlace:
+  - {fileID: 3893660958379040158, guid: 7bd2a90c2c7c0432cbe80d38863a5448, type: 3}
+  debug: {fileID: 468004959}
+--- !u!114 &1749708698
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1749708689}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 562093ec4acd3456baa4fa3c0e2932ca, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  prefabToInstantiate:
+  - name: TAG_WALL1
+    prefab: {fileID: 3893660958379040158, guid: 7bd2a90c2c7c0432cbe80d38863a5448,
+      type: 3}
+  - name: TAG_WALL2
+    prefab: {fileID: 3893660958379040158, guid: 7bd2a90c2c7c0432cbe80d38863a5448,
+      type: 3}
+  - name: TAG_WALL3
+    prefab: {fileID: 3893660958379040158, guid: 7bd2a90c2c7c0432cbe80d38863a5448,
+      type: 3}
+  - name: TAG_WALL4
+    prefab: {fileID: 3893660958379040158, guid: 7bd2a90c2c7c0432cbe80d38863a5448,
+      type: 3}
 --- !u!1 &1900725046
 GameObject:
   m_ObjectHideFlags: 0
