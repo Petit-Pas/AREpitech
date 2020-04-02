@@ -9,112 +9,141 @@ using UnityEngine.XR.ARSubsystems;
 [RequireComponent(typeof(ARRaycastManager))]
 public class ObjectPlacement : MonoBehaviour
 {
-
-    public ARCameraManager ARCamera;
-
-    public RectTransform direction;
-
-    public float Speed = 1;
-
-    public Text debug = null;
-
-    public GameObject placedObject; // prefab
-    private GameObject spawnedObject;
-    private Rigidbody spawnedObjectRigidbody;
+    public RectTransform controls;
+    [Header("Ball")]
+    public GameObject ball;
+    [Header("Walls")]
+    public Material defaultMaterial;
+    public Material highlightMaterial;
+    public GameObject tagsParent;
 
     private ARRaycastManager raycastManager;
     private List<ARRaycastHit> rayHits = new List<ARRaycastHit>();
 
-    private ARPlaneManager planeManager = default;
-    private TrackableCollection<ARPlane> planeCollection = default;
-
     void Awake()
     {
         raycastManager = GetComponent<ARRaycastManager>();
-        planeManager = GetComponent<ARPlaneManager>();
-
-        planeCollection = planeManager.trackables;
-
     }
 
-    bool TryGetTouchPosition(out Vector2 touchPosition)    
+    void Update()
     {
-#if UNITY_EDITOR
-        if (Input.GetMouseButton(0))
+        if (!TryGetTouchPosition(out Vector2 touchPosition, out TouchPhase phase)) return;
+        if (!IsPointInDirectionElement(touchPosition))
         {
-            touchPosition = new Vector2(Input.mousePosition.x, Input.mousePosition.y);
-            return true;
+            Ray ray = Camera.main.ScreenPointToRay(touchPosition);
+            if (Physics.Raycast(ray, out RaycastHit hit) && phase == TouchPhase.Began)
+            {
+                //ARTrackedImage selection = hit.transform.GetComponent<ARTrackedImage>();
+                if (hit.transform.CompareTag("WALL"))
+                {
+                    Transform clone = Instantiate(hit.transform, tagsParent.transform);
+                    clone.tag = "FIXED_WALL";
+                }
+                else if (hit.transform.CompareTag("START"))
+                {
+                    GameObject[] starts = GameObject.FindGameObjectsWithTag("FIXED_START");
+                    foreach (GameObject start in starts)
+                        GameObject.Destroy(start);
+                    Transform clone = Instantiate(hit.transform, tagsParent.transform);
+                    clone.tag = "FIXED_START";
+                }
+                else if (hit.transform.CompareTag("END"))
+                {
+                    GameObject[] ends = GameObject.FindGameObjectsWithTag("FIXED_END");
+                    foreach (GameObject end in ends)
+                        GameObject.Destroy(end);
+                    Transform clone = Instantiate(hit.transform, tagsParent.transform);
+                    clone.tag = "FIXED_END";
+                }
+                else if (hit.transform.CompareTag("FIXED_WALL"))
+                {
+                    Renderer selectionRenderer = hit.transform.GetComponent<Renderer>();
+                    if (selectionRenderer != null)
+                    {
+                        if (selectionRenderer.sharedMaterial == highlightMaterial)
+                        {
+                            selectionRenderer.material = defaultMaterial;
+                        }
+                        else
+                        {
+                            selectionRenderer.material = highlightMaterial;
+                        }
+                    }
+                }
+                else if (raycastManager.Raycast(touchPosition, rayHits, TrackableType.PlaneWithinPolygon))
+                {
+                    Pose hitPose = default;
+                    GameObject[] starts = GameObject.FindGameObjectsWithTag("FIXED_START");
+                    if (starts.Length == 0)
+                    {
+                        starts = GameObject.FindGameObjectsWithTag("START");
+                    }
+                    if (starts.Length < 1)
+                    {
+                        hitPose = rayHits[0].pose;
+                        hitPose.position.y += 1;
+                        hitPose.position.x -= 0.1f;
+                    } else
+                    {
+                        hitPose.position.x = starts[0].transform.position.x;
+                        hitPose.position.y = starts[0].transform.position.y + 1;
+                        hitPose.position.z = starts[0].transform.position.z;
+                    }
+                    ball.SetActive(true);
+                    ball.transform.position = hitPose.position;
+                    ball.GetComponent<Rigidbody>().velocity = default;
+                }
+            }
         }
-#else
+    }
+
+    bool TryGetTouchPosition(out Vector2 touchPosition, out TouchPhase phase)
+    {
         if (Input.touchCount > 0)
         {
             touchPosition = Input.GetTouch(0).position;
+            phase = Input.GetTouch(0).phase;
             return true;
         }
-#endif
         touchPosition = default;
+        phase = TouchPhase.Canceled;
         return false;
     }
 
     bool IsPointInDirectionElement(Vector2 position)
     {
-        return RectTransformUtility.RectangleContainsScreenPoint(direction, position, null);
+        return RectTransformUtility.RectangleContainsScreenPoint(controls, position, null);
     }
 
-    double get_trigonometric_angle(double degrees)
+    public void Reset()
     {
-        return (Math.PI * (degrees * 100)) / 180;
+        GameObject[] starts = GameObject.FindGameObjectsWithTag("FIXED_START");
+        foreach (GameObject start in starts)
+            GameObject.Destroy(start);
+        GameObject[] ends = GameObject.FindGameObjectsWithTag("FIXED_END");
+        foreach (GameObject end in ends)
+            GameObject.Destroy(end);
+        GameObject[] walls = GameObject.FindGameObjectsWithTag("FIXED_WALL");
+        foreach (GameObject wall in walls)
+            GameObject.Destroy(wall);
     }
 
-    void HandleInput(Vector2 position)
+    public void ResetBall()
     {
-        Vector2 directionOrientation = default;
-
-        if (spawnedObject != null)
+        Pose hitPose = default;
+        GameObject[] starts = GameObject.FindGameObjectsWithTag("FIXED_START");
+        if (starts.Length == 0)
         {
-
-            directionOrientation.x = -((direction.position.x - position.x) / (direction.sizeDelta.x / 2));
-            directionOrientation.y = -((direction.position.y - position.y) / (direction.sizeDelta.y / 2));
-
-            if (debug != null)
-            {
-                debug.text = "";
-                debug.text += directionOrientation;
-            }
-
-            Vector3 forwardOnPlane = Vector3.ProjectOnPlane(ARCamera.transform.forward, Vector3.up).normalized;
-
-            float angle = (float)Math.Atan2(-directionOrientation.x, directionOrientation.y) * Mathf.Rad2Deg;
-
-            Vector3 movement = Quaternion.AngleAxis(-angle, Vector3.up) * forwardOnPlane;
-            spawnedObjectRigidbody.AddForce(movement * Speed);
+            starts = GameObject.FindGameObjectsWithTag("START");
         }
-    }
-
-    // Update is called once per frame
-    void Update()
-    {
-        if (!TryGetTouchPosition(out Vector2 touchPosition))
-            return;
-
-        if (IsPointInDirectionElement(touchPosition))
-            HandleInput(touchPosition);
-
-        else if (raycastManager.Raycast(touchPosition, rayHits, TrackableType.PlaneWithinPolygon))
+        if (starts.Length > 0)
         {
-            Pose hitPose = rayHits[0].pose;
-            hitPose.position.y += 1;
-            hitPose.position.x -= 0.1f;
-            if (spawnedObject == null)
-            {
-                spawnedObject = Instantiate(placedObject, hitPose.position, hitPose.rotation);
-                spawnedObjectRigidbody = spawnedObject.GetComponent<Rigidbody>();
-            }
-            else
-            {
-                spawnedObject.transform.position = hitPose.position;
-                spawnedObjectRigidbody.velocity = default;
-            }
+            hitPose.position.x = starts[0].transform.position.x;
+            hitPose.position.y = starts[0].transform.position.y + 1;
+            hitPose.position.z = starts[0].transform.position.z;
         }
+        ball.SetActive(true);
+        ball.transform.position = hitPose.position;
+        ball.GetComponent<Rigidbody>().velocity = default;
     }
 }

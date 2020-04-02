@@ -3,7 +3,13 @@
 --- !u!78 &1
 TagManager:
   serializedVersion: 2
-  tags: []
+  tags:
+  - WALL
+  - FIXED_WALL
+  - START
+  - FIXED_START
+  - END
+  - FIXED_END
   layers:
   - Default
   - TransparentFX
