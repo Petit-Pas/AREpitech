@@ -23,27 +23,7 @@ MonoBehaviour:
       m_GuidHigh: 789253717104660667
     m_Size: {x: 0.08, y: 0.08}
     m_SpecifySize: 0
-    m_Name: TAG_WALL1
-    m_Texture: {fileID: 0}
-  - m_SerializedGuid:
-      m_GuidLow: 4743685947188077271
-      m_GuidHigh: 14106015088743421373
-    m_SerializedTextureGuid:
-      m_GuidLow: 11868294675413185198
-      m_GuidHigh: 12962254780975186537
-    m_Size: {x: 0.079422385, y: 0.08}
-    m_SpecifySize: 0
-    m_Name: TAG_WALL2
-    m_Texture: {fileID: 0}
-  - m_SerializedGuid:
-      m_GuidLow: 5071971154062373401
-      m_GuidHigh: 1598796118488045482
-    m_SerializedTextureGuid:
-      m_GuidLow: 2655476316475726994
-      m_GuidHigh: 6718318925081236553
-    m_Size: {x: 0.08, y: 0.08}
-    m_SpecifySize: 0
-    m_Name: TAG_WALL3
+    m_Name: TAG_WALL
     m_Texture: {fileID: 0}
   - m_SerializedGuid:
       m_GuidLow: 5694335579544338903
@@ -53,5 +33,15 @@ MonoBehaviour:
       m_GuidHigh: 17946899628999682936
     m_Size: {x: 0.08, y: 0.08}
     m_SpecifySize: 0
-    m_Name: TAG_WALL4
+    m_Name: TAG_START
+    m_Texture: {fileID: 0}
+  - m_SerializedGuid:
+      m_GuidLow: 5628276279804997857
+      m_GuidHigh: 10206242446095063999
+    m_SerializedTextureGuid:
+      m_GuidLow: 11868294675413185198
+      m_GuidHigh: 12962254780975186537
+    m_Size: {x: 0, y: 0}
+    m_SpecifySize: 0
+    m_Name: TAG_END
     m_Texture: {fileID: 0}

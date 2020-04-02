@@ -11,6 +11,8 @@ public class MultiImageTracker : MonoBehaviour
 
     private Dictionary<string, GameObject> instanciatePrefab;
 
+    public Transform prefabsParentTransform;
+
     private void Awake()
     {
         m_trackedImageManager = GetComponent<ARTrackedImageManager>();
@@ -73,7 +75,6 @@ public class MultiImageTracker : MonoBehaviour
 
     private void UpdateTrackingGameObject(ARTrackedImage updatedImage)
     {
-
         for (int i = 0; i < instanciatePrefab.Count; i++)
         {
             if (instanciatePrefab.TryGetValue(updatedImage.referenceImage.name, out GameObject prefab))
